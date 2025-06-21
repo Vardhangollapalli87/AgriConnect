@@ -1,15 +1,14 @@
 import express from 'express';
-import { signup } from '../controllers/farmerController';
+import { login, signup, logout, updateProfile } from '../controllers/userController.js';
+import authRoute from '../middleware/authRoute.js'; // Make sure this path is correct
 
 const userRouter = express.Router();
 
-
 // define routes for user operations
 
-userRouter.get('/login',login);
-userRouter.get('/signup',signup);
-userRouter.get('/update-profile',authRoute,profile);
-
-
+userRouter.post('/login', login);
+userRouter.post('/signup', signup);
+userRouter.post('/logout', logout);
+userRouter.post('/update-profile', authRoute, updateProfile);
 
 export default userRouter;

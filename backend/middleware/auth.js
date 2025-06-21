@@ -7,22 +7,14 @@ const authRoute = async (req,res,next)=>{
 
     const {token} = req.headers;
 
-    // role is passed in body
-    // this is used to check which model to use for authentication
-
-    const {role} = req.body;
-
     if(!token){
         return res.json({success:false,message:"Not Authorized Login Again"})
     }
 
     try {
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
-
-        //exists in the database based on the role
-
-        req.body.userId = decoded.id;
-        req.body.role = role;
+        // Attach user info to req for controller use
+        req.user = { _id: decoded.id };
         next();
     } catch (error) {
         console.log(error);
